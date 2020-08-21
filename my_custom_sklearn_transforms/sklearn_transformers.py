@@ -16,37 +16,61 @@ class DropColumns(BaseEstimator, TransformerMixin):
         return data.drop(labels=self.columns, axis='columns')
 class ImputerMissingValues(BaseEstimator, TransformerMixin):
     def __init__(self):
-        self=self
+        self.median_hb=0
+        self.median_hd=0
+        self.median_hf=0
+        self.moda_cbd=0
+        self.moda_cbb=0
+        self.moda_cbf=0
+        self.moda_cad=0
+        self.moda_cab=0
+        self.moda_caf=0
+        self.median_ad=0
+        self.median_ab=0
+        self.median_af=0
 
     def fit(self, X, y=None):
+        self.median_hb=X['HOURS_BACKEND'].median()
+        self.median_hd=X['HOURS_DATASCIENCE'].median()
+        self.median_hf=X['HOURS_FRONTEND'].median()
+        self.moda_cbd=X['NUM_COURSES_BEGINNER_DATASCIENCE'].mode()[0]
+        self.moda_cbb=X['NUM_COURSES_BEGINNER_BACKEND'].mode()[0]
+        self.moda_cbf=X['NUM_COURSES_BEGINNER_FRONTEND'].mode()[0]
+        self.moda_cad=X['NUM_COURSES_ADVANCED_DATASCIENCE'].mode()[0]
+        self.moda_cab=X['NUM_COURSES_ADVANCED_BACKEND'].mode()[0]
+        self.moda_caf=X['NUM_COURSES_ADVANCED_FRONTEND'].mode()[0]
+        self.median_ad=X['AVG_SCORE_DATASCIENCE'].median()
+        self.median_ab=X['AVG_SCORE_BACKEND'].median()
+        self.median_af=X['AVG_SCORE_FRONTEND'].median()
         return self
+
     
     def transform(self, X):
         # Primero copiamos el dataframe de datos de entrada 'X'
         data = X.copy()
         # Filling missing HOURS_BACKEND values with mean
-        data['HOURS_BACKEND'] = data['HOURS_BACKEND'].fillna(data['HOURS_BACKEND'].median())
+        data['HOURS_BACKEND'] = data['HOURS_BACKEND'].fillna(self.median_hb)
         # Filling missing HOURS_DATASCIENCE values with most common value
-        data['HOURS_DATASCIENCE'] = data['HOURS_DATASCIENCE'].fillna(data['HOURS_DATASCIENCE'].median())
+        data['HOURS_DATASCIENCE'] = data['HOURS_DATASCIENCE'].fillna(self.median_hd)
         # Filling missing HOURS_FRONTEND values with most common value
-        data['HOURS_FRONTEND'] = data['HOURS_FRONTEND'].fillna(data['HOURS_FRONTEND'].median())
+        data['HOURS_FRONTEND'] = data['HOURS_FRONTEND'].fillna(self.median_hf)
         # Filling missing NUM_COURSES_BEGINNER_DATASCIENCE values with most common value
-        data['NUM_COURSES_BEGINNER_DATASCIENCE'] = data['NUM_COURSES_BEGINNER_DATASCIENCE'].fillna(data['NUM_COURSES_BEGINNER_DATASCIENCE'].mode()[0])
+        data['NUM_COURSES_BEGINNER_DATASCIENCE'] = data['NUM_COURSES_BEGINNER_DATASCIENCE'].fillna(self.moda_cbd)
         # Filling missing NUM_COURSES_BEGINNER_BACKEND values with most common value
-        data['NUM_COURSES_BEGINNER_BACKEND'] = data['NUM_COURSES_BEGINNER_BACKEND'].fillna(data['NUM_COURSES_BEGINNER_BACKEND'].mode()[0])
+        data['NUM_COURSES_BEGINNER_BACKEND'] = data['NUM_COURSES_BEGINNER_BACKEND'].fillna(self.moda_cbb)
         # Filling missing NUM_COURSES_BEGINNER_FRONTEND values with most common value
-        data['NUM_COURSES_BEGINNER_FRONTEND'] = data['NUM_COURSES_BEGINNER_FRONTEND'].fillna(data['NUM_COURSES_BEGINNER_FRONTEND'].mode()[0])
+        data['NUM_COURSES_BEGINNER_FRONTEND'] = data['NUM_COURSES_BEGINNER_FRONTEND'].fillna(self.moda_cbf)
         # Filling missing NUM_COURSES_ADVANCED_DATASCIENCE values with mean
-        data['NUM_COURSES_ADVANCED_DATASCIENCE'] = data['NUM_COURSES_ADVANCED_DATASCIENCE'].fillna(data['NUM_COURSES_ADVANCED_DATASCIENCE'].mode()[0])
+        data['NUM_COURSES_ADVANCED_DATASCIENCE'] = data['NUM_COURSES_ADVANCED_DATASCIENCE'].fillna(self.moda_cad)
         # Filling missing NUM_COURSES_ADVANCED_BACKEND values with mean
-        data['NUM_COURSES_ADVANCED_BACKEND'] = data['NUM_COURSES_ADVANCED_BACKEND'].fillna(data['NUM_COURSES_ADVANCED_BACKEND'].mode()[0])
+        data['NUM_COURSES_ADVANCED_BACKEND'] = data['NUM_COURSES_ADVANCED_BACKEND'].fillna(self.moda_cab)
         # Filling missing NUM_COURSES_ADVANCED_FRONTEND values with mean
-        data['NUM_COURSES_ADVANCED_FRONTEND'] = data['NUM_COURSES_ADVANCED_FRONTEND'].fillna(data['NUM_COURSES_ADVANCED_FRONTEND'].mode()[0])
+        data['NUM_COURSES_ADVANCED_FRONTEND'] = data['NUM_COURSES_ADVANCED_FRONTEND'].fillna(self.moda_caf)
         #AVG_SCORE_DATASCIENCE with mean
-        data['AVG_SCORE_DATASCIENCE'] = data['AVG_SCORE_DATASCIENCE'].fillna(data['AVG_SCORE_DATASCIENCE'].median())
+        data['AVG_SCORE_DATASCIENCE'] = data['AVG_SCORE_DATASCIENCE'].fillna(self.median_ad)
         #AVG_SCORE_BACKEND with mean
-        data['AVG_SCORE_BACKEND'] = data['AVG_SCORE_BACKEND'].fillna(data['AVG_SCORE_BACKEND'].median())
+        data['AVG_SCORE_BACKEND'] = data['AVG_SCORE_BACKEND'].fillna(self.median_ab)
         #AVG_SCORE_FRONTEND with mean
-        data['AVG_SCORE_FRONTEND'] = data['AVG_SCORE_FRONTEND'].fillna(data['AVG_SCORE_FRONTEND'].median())
+        data['AVG_SCORE_FRONTEND'] = data['AVG_SCORE_FRONTEND'].fillna(self.median_af)
         # Devolvemos un nuevo dataframe de datos sin las columnas no deseadas
         return data
