@@ -15,11 +15,11 @@ class DropColumns(BaseEstimator, TransformerMixin):
         data = X.copy()
         # Retornamos um novo dataframe sem as colunas indesejadas
         return data.drop(labels=self.columns, axis='columns')
-    
-class ImputerDesafio4(BaseEstimator, TransformerMixin):
+    # All sklearn Transforms must have the `transform` and `fit` methods
+class DropColumns2(BaseEstimator, TransformerMixin):
     def __init__(self, columns):
         self.columns = columns
-       
+
     def fit(self, X, y=None):
         return self
 
