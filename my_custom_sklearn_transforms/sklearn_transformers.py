@@ -78,9 +78,9 @@ class ImputerMissingValues(BaseEstimator, TransformerMixin):
 
 class ImputerValuesDesafio4(BaseEstimator, TransformerMixin):
     def __init__(self):
-        self.si0= None
-        self.si1= None
-        self.sif= None
+        self.si0= 0
+        self.si1= 0
+        self.sif= 0
         self.y_label_0=[]
         
     def fit(self, X, y=None):
