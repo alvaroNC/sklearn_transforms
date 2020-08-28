@@ -15,6 +15,7 @@ class DropColumns(BaseEstimator, TransformerMixin):
         data = X.copy()
         # Retornamos um novo dataframe sem as colunas indesejadas
         return data.drop(labels=self.columns, axis='columns')
+    
 class ImputerDesafio4(BaseEstimator, TransformerMixin):
     def __init__(self):
         self.si0= 0
@@ -28,7 +29,6 @@ class ImputerDesafio4(BaseEstimator, TransformerMixin):
         self.sif.fit(X=X[self.y_label_0=='Aceptado']) #doesnt matter whicch you choose.It's only to get the number of features.
         self.sif.statistics_=(self.si0.statistics_+self.si1.statistics_)/2
         return self
-
     
     def transform(self, X):
         data=self.sif.transform(X.copy())
