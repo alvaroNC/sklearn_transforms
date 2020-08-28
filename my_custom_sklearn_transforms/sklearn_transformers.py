@@ -22,10 +22,10 @@ class ImputerValuesDesafio4(BaseEstimator, TransformerMixin):
         self.sif= 0
         self.y_label_0=[]
         
-#     def fit(self, X, y=None):
-#         return self
-    
     def fit(self, X, y=None):
+        return self
+    
+    def fit_pre(self, X, y=None):
         self.si0.fit(X=X[self.y_label_0=='Aceptado'])
         self.si1.fit(X=X[self.y_label_0=='Sospechoso'])
         self.sif.fit(X=X[self.y_label_0=='Aceptado']) #doesnt matter whicch you choose.It's only to get the number of features.
