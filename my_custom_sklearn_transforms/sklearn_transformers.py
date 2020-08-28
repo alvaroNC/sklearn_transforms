@@ -1,5 +1,4 @@
-from sklearn.base import BaseEstimator, TransformerMixin
-
+from sklearn.base import BaseEstimator, TransformerMixinfrom sklearn.impute import SimpleImputer
 
 # All sklearn Transforms must have the `transform` and `fit` methods
 class DropColumns(BaseEstimator, TransformerMixin):
@@ -73,4 +72,41 @@ class ImputerMissingValues(BaseEstimator, TransformerMixin):
         #AVG_SCORE_FRONTEND with mean
         data['AVG_SCORE_FRONTEND'] = data['AVG_SCORE_FRONTEND'].fillna(self.median_af)
         # Devolvemos un nuevo dataframe de datos sin las columnas no deseadas
+        return data
+
+class ImputerValuesDesafio4(BaseEstimator, TransformerMixin):
+    def __init__(self):
+        self.si0= SimpleImputer(
+            missing_values=np.nan,  # los valores que faltan son del tipo ``np.nan`` (Pandas estándar)
+            strategy='mean',  # la estrategia elegida es cambiar el valor faltante por una constante
+            fill_value=None,  # la constante que se usará para completar los valores faltantes es un int64 = 0
+            verbose=0,
+            copy=True
+        )
+        self.si1= SimpleImputer(
+            missing_values=np.nan,  # los valores que faltan son del tipo ``np.nan`` (Pandas estándar)
+            strategy='mean',  # la estrategia elegida es cambiar el valor faltante por una constante
+            fill_value=None,  # la constante que se usará para completar los valores faltantes es un int64 = 0
+            verbose=0,
+            copy=True
+        )
+        self.sif= SimpleImputer(
+            missing_values=np.nan,  # los valores que faltan son del tipo ``np.nan`` (Pandas estándar)
+            strategy='mean',  # la estrategia elegida es cambiar el valor faltante por una constante
+            fill_value=None,  # la constante que se usará para completar los valores faltantes es un int64 = 0
+            verbose=0,
+            copy=True
+        )
+        self.y_label_0=[]
+        
+    def fit(self, X, y=None):
+        self.si0.fit(X=X[self.y_label_0=='Aceptado'])
+        self.si1.fit(X=X[self.y_label_0=='Sospechoso'])
+        self.sif.fit(X=X[self.y_label_0=='Aceptado']) #doesnt matter whicch you choose.It's only to get the number of features.
+        self.sif.statistics_=(self.si0.statistics_+self.si1.statistics_)/2
+        return self
+
+    
+    def transform(self, X):
+        data=self.sif.transform(X.copy())
         return data
