@@ -1,6 +1,6 @@
 from sklearn.base import BaseEstimator, TransformerMixin
 from sklearn.impute import SimpleImputer
-
+import numpy
 
 # All sklearn Transforms must have the `transform` and `fit` methods
 class DropColumns(BaseEstimator, TransformerMixin):
@@ -75,11 +75,6 @@ class ImputerMissingValues(BaseEstimator, TransformerMixin):
         data['AVG_SCORE_FRONTEND'] = data['AVG_SCORE_FRONTEND'].fillna(self.median_af)
         # Devolvemos un nuevo dataframe de datos sin las columnas no deseadas
         return data
-
-import numpy
-import pandas
-from sklearn.base import BaseEstimator, TransformerMixin
-from sklearn.impute import SimpleImputer
 
 class ImputerValuesDesafio4(BaseEstimator, TransformerMixin):
     def __init__(self):
