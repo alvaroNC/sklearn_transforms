@@ -17,13 +17,9 @@ class DropColumns(BaseEstimator, TransformerMixin):
         return data.drop(labels=self.columns, axis='columns')
     
 class ImputerDesafio4(BaseEstimator, TransformerMixin):
-    def __init__(self):
-        self.si0= 0
-        self.si1= 0
-        self.sif= 0
-        self.y_label_0=[]
-        
-
+    def __init__(self, columns):
+        self.columns = columns
+       
     def fit(self, X, y=None):
         return self
 
