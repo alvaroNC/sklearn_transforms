@@ -23,13 +23,12 @@ class ImputerDesafio4(BaseEstimator, TransformerMixin):
         self.sif= 0
         self.y_label_0=[]
         
+
     def fit(self, X, y=None):
-        self.si0.fit(X=X[self.y_label_0=='Aceptado'])
-        self.si1.fit(X=X[self.y_label_0=='Sospechoso'])
-        self.sif.fit(X=X[self.y_label_0=='Aceptado']) #doesnt matter whicch you choose.It's only to get the number of features.
-        self.sif.statistics_=(self.si0.statistics_+self.si1.statistics_)/2
         return self
-    
+
     def transform(self, X):
-        data=self.sif.transform(X.copy())
-        return data
+        # Primeiro realizamos a cópia do dataframe 'X' de entrada
+        data = X.copy()
+        # Retornamos um novo dataframe sem as colunas indesejadas
+        return data.drop(labels=self.columns, axis='columns')
