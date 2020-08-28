@@ -78,24 +78,29 @@ class ImputerMissingValues(BaseEstimator, TransformerMixin):
         # Devolvemos un nuevo dataframe de datos sin las columnas no deseadas
         return data
 
+import numpy as np
+import pandas as pd
+from sklearn.base import BaseEstimator, TransformerMixin
+from sklearn.impute import SimpleImputer
+
 class ImputerValuesDesafio4(BaseEstimator, TransformerMixin):
     def __init__(self):
         self.si0= SimpleImputer(
-            missing_values=nan,  # los valores que faltan son del tipo ``np.nan`` (Pandas estándar)
+            missing_values=np.nan,  # los valores que faltan son del tipo ``np.nan`` (Pandas estándar)
             strategy='mean',  # la estrategia elegida es cambiar el valor faltante por una constante
             fill_value=None,  # la constante que se usará para completar los valores faltantes es un int64 = 0
             verbose=0,
             copy=True
         )
         self.si1= SimpleImputer(
-            missing_values=nan,  # los valores que faltan son del tipo ``np.nan`` (Pandas estándar)
+            missing_values=np.nan,  # los valores que faltan son del tipo ``np.nan`` (Pandas estándar)
             strategy='mean',  # la estrategia elegida es cambiar el valor faltante por una constante
             fill_value=None,  # la constante que se usará para completar los valores faltantes es un int64 = 0
             verbose=0,
             copy=True
         )
         self.sif= SimpleImputer(
-            missing_values=nan,  # los valores que faltan son del tipo ``np.nan`` (Pandas estándar)
+            missing_values=np.nan,  # los valores que faltan son del tipo ``np.nan`` (Pandas estándar)
             strategy='mean',  # la estrategia elegida es cambiar el valor faltante por una constante
             fill_value=None,  # la constante que se usará para completar los valores faltantes es un int64 = 0
             verbose=0,
